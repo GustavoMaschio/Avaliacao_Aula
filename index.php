@@ -11,13 +11,13 @@ include 'UsuarioDAO.php';
 // Cria uma instância da classe UsuarioDAO
 $usuarioDAO = new UsuarioDAO();
 
-// Verifica se o formulário de inserção foi submetido
-if(isset($_POST['inserir'])) {
-  // Cria um novo objeto Usuario com os dados do formulário
-  $usuario = new Usuario($_POST['nome'], $_POST['email']);
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $usuario = new Usuario();
+    $usuario->setNome($_POST['nome']);
+    $usuario->setEmail($_POST['email']);
 
-  // Insere o usuário no banco de dados
-  $usuarioDAO->inserir($usuario);
+    $dao = new UsuarioDAO();
+    $dao->inserir($usuario);
 }
 
 // Verifica se o formulário de atualização foi submetido
